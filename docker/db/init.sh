@@ -26,10 +26,10 @@ if [ "$TABLES" -eq 0 ]; then
     
     # Import SQL files
     echo "📊 Importing install.sql..."
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" < /tmp/install.sql
+    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" --force < /tmp/install.sql
     
     echo "📊 Importing demo.sql..."
-    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" < /tmp/demo.sql
+    mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" --force < /tmp/demo.sql
     
     # Cleanup
     rm -f /tmp/install.sql /tmp/demo.sql
