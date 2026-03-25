@@ -50,7 +50,7 @@ services:
       - "80:80"
       - "8443:443"
     volumes:
-      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./docker/caddy:/etc/caddy:ro
       - ./app:/var/www/html:ro
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
