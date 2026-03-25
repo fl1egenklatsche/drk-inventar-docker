@@ -1,7 +1,9 @@
 services:
   # MariaDB Datenbank
   db:
-    image: mariadb:11
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
     container_name: drk-inventar-db
     restart: unless-stopped
     environment:
@@ -12,8 +14,6 @@ services:
       TZ: ${TZ:-Europe/Berlin}
     volumes:
       - ./data/db:/var/lib/mysql
-      - ./sql/install.sql:/docker-entrypoint-initdb.d/01-install.sql:ro
-      - ./sql/demo.sql:/docker-entrypoint-initdb.d/02-demo.sql:ro
     networks:
       - drk-network
     healthcheck:
