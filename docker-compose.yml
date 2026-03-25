@@ -53,6 +53,8 @@ services:
     volumes:
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
+    volumes_from:
+      - app:ro
     networks:
       - drk-network
     depends_on:
