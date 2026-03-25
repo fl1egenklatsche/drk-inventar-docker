@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/html
 
 # Copy application code INTO the image
-COPY ../../app/ /var/www/html/
+# Build context is repo root (.), so app/ is directly accessible
+COPY app/ /var/www/html/
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
