@@ -44,13 +44,14 @@ services:
     image: caddy:2
     container_name: drk-inventar-caddy
     restart: unless-stopped
+    command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     environment:
       HOSTNAME: ${HOSTNAME:?HOSTNAME muss in .env gesetzt werden!}
     ports:
       - "80:80"
       - "8443:443"
     volumes:
-      - ./docker/caddy:/etc/caddy:ro
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./app:/var/www/html:ro
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
