@@ -2,10 +2,22 @@
     # Let's Encrypt automatisch via ACME
     # Zertifikate werden in /data/caddy gespeichert
     
-    # PHP-FPM Backend
+    # Root directory
     root * /var/www/html
-    php_fastcgi app:9000
+    
+    # Index files
     file_server
+    
+    # Try files in order
+    try_files {path} {path}/ /index.php?{query}
+    
+    # PHP-FPM Backend
+    php_fastcgi app:9000 {
+        index index.php
+    }
+    
+    # Gzip compression
+    encode gzip
     
     # Security Headers
     header {
@@ -13,6 +25,7 @@
         X-Content-Type-Options "nosniff"
         X-XSS-Protection "1; mode=block"
         Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
     }
     
     # Logging
