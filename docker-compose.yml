@@ -50,7 +50,7 @@ services:
       HOSTNAME: ${HOSTNAME:?HOSTNAME muss in .env gesetzt werden!}
     ports:
       - "80:80"
-      - "443:443"
+      - "8443:443"
     volumes:
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./app:/var/www/html:ro
