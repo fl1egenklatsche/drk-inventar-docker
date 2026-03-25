@@ -12,7 +12,8 @@ services:
       TZ: ${TZ:-Europe/Berlin}
     volumes:
       - ./data/db:/var/lib/mysql
-      - ./sql:/docker-entrypoint-initdb.d:ro
+      - ./app/install.sql:/docker-entrypoint-initdb.d/01-install.sql:ro
+      - ./app/demo.sql:/docker-entrypoint-initdb.d/02-demo.sql:ro
     networks:
       - drk-network
     healthcheck:
@@ -30,6 +31,11 @@ services:
     restart: unless-stopped
     environment:
       TZ: ${TZ:-Europe/Berlin}
+      DB_HOST: db
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-drk_inventar}
+      DB_USER: ${DB_USER:-drk_user}
+      DB_PASSWORD: ${DB_PASSWORD:-drk_password}
     volumes:
       - ./data/uploads:/var/www/html/uploads
     networks:

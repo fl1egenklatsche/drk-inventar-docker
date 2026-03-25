@@ -15,6 +15,10 @@ WORKDIR /var/www/html
 # Build context is repo root (.), so app/ is directly accessible
 COPY app/ /var/www/html/
 
+# Copy entrypoint script
+COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
@@ -22,4 +26,4 @@ RUN chown -R www-data:www-data /var/www/html \
 # Expose PHP-FPM port
 EXPOSE 9000
 
-CMD ["php-fpm"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
