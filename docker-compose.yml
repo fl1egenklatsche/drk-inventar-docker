@@ -41,8 +41,8 @@ services:
   # Caddy Webserver (mit Let's Encrypt)
   caddy:
     build:
-      context: ./docker/caddy
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: docker/caddy/Dockerfile
     container_name: drk-inventar-caddy
     restart: unless-stopped
     environment:
@@ -51,10 +51,9 @@ services:
       - "80:80"
       - "8443:443"
     volumes:
+      - ./data/uploads:/var/www/html/uploads
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
-    volumes_from:
-      - app:ro
     networks:
       - drk-network
     depends_on:
