@@ -1,38 +1,17 @@
 {$HOSTNAME} {
     root * /var/www/html
     
-    # Debug: Show what Caddy sees
+    encode gzip
+    
+    # PHP-FPM
+    php_fastcgi app:9000
+    
+    # Static files
+    file_server
+    
+    # Logging
     log {
         output stdout
         format console
-        level DEBUG
-    }
-    
-    # First try: direct file serving
-    @phpFiles {
-        path *.php
-    }
-    
-    # Handle PHP files
-    handle @phpFiles {
-        php_fastcgi app:9000
-    }
-    
-    # Handle everything else as files
-    handle {
-        file_server
-    }
-    
-    # Fallback to index.php
-    handle {
-        rewrite * /index.php
-        php_fastcgi app:9000
-    }
-    
-    # Security Headers
-    header {
-        X-Frame-Options "SAMEORIGIN"
-        X-Content-Type-Options "nosniff"
-        -Server
     }
 }
