@@ -1,23 +1,13 @@
 {$HOSTNAME} {
-    # Let's Encrypt automatisch via ACME
-    # Zertifikate werden in /data/caddy gespeichert
-    
-    # Root directory
     root * /var/www/html
     
-    # Index files
-    file_server
-    
-    # Try files in order
-    try_files {path} {path}/ /index.php?{query}
-    
-    # PHP-FPM Backend
-    php_fastcgi app:9000 {
-        index index.php
-    }
-    
-    # Gzip compression
     encode gzip
+    
+    # PHP Handler
+    php_fastcgi app:9000
+    
+    # Serve static files
+    file_server
     
     # Security Headers
     header {
@@ -32,10 +22,5 @@
     log {
         output stdout
         format console
-    }
-    
-    # Error Pages
-    handle_errors {
-        respond "{http.error.status_code} {http.error.status_text}"
     }
 }
