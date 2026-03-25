@@ -319,6 +319,6 @@ CREATE TABLE `vehicles` (
 
 -- Insert Admin User (admin / admin123)
 INSERT INTO `users` (`username`, `password_hash`, `email`, `role`, `created_at`) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@example.com', 'admin', NOW());
+('admin', '$2y$10$MqZMHooOBSsJGPkGAVkq8.5kdWiDYzvlqgScLSSl5.jtkHkqxj6Mm', 'admin@example.com', 'admin', NOW());
 
 SET FOREIGN_KEY_CHECKS = 1;
