@@ -32,7 +32,7 @@ docker-compose exec db mariadb -u drk_user -pdrk_password drk_inventar < /docker
 docker-compose exec db mariadb -u drk_user -pdrk_password drk_inventar < /docker-entrypoint-initdb.d/demo.sql
 ```
 
-4. Fertig! Öffne: `https://IHR-HOSTNAME`
+4. Fertig! Öffne: `https://IHR-HOSTNAME:8443`
 
 ## Umgebungsvariablen
 
@@ -110,7 +110,7 @@ tar -czf uploads_$(date +%Y%m%d).tar.gz data/uploads/
 
 ### Let's Encrypt Fehler
 - Stelle sicher dass der Hostname auf die Server-IP zeigt (DNS)
-- Port 80 und 443 müssen erreichbar sein
+- Port 80 und 8443 müssen erreichbar sein
 - Caddy braucht beim ersten Start 1-2 Minuten für das Zertifikat
 
 ### Datenbank Connection Error
