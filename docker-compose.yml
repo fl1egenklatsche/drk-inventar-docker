@@ -24,14 +24,13 @@ services:
   # PHP-FPM Application
   app:
     build:
-      context: ./docker/php
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: docker/php/Dockerfile
     container_name: drk-inventar-app
     restart: unless-stopped
     environment:
       TZ: ${TZ:-Europe/Berlin}
     volumes:
-      - ./app:/var/www/html
       - ./data/uploads:/var/www/html/uploads
     networks:
       - drk-network
@@ -52,7 +51,6 @@ services:
       - "80:80"
       - "8443:443"
     volumes:
-      - ./app:/var/www/html:ro
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
     networks:

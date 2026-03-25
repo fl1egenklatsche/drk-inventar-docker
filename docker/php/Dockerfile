@@ -1,29 +1,24 @@
 FROM php:8.2-fpm
 
-# System Dependencies
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    git \
-    && docker-php-ext-install pdo pdo_mysql zip \
-    && rm -rf /var/lib/apt/lists/*
-
-# PHP Configuration
-RUN { \
-    echo 'upload_max_filesize = 50M'; \
-    echo 'post_max_size = 50M'; \
-    echo 'memory_limit = 256M'; \
-    echo 'max_execution_time = 300'; \
-    echo 'date.timezone = Europe/Berlin'; \
-} > /usr/local/etc/php/conf.d/custom.ini
+    && docker-php-ext-install zip pdo pdo_mysql mysqli \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Permissions
-RUN chown -R www-data:www-data /var/www/html
+# Copy application code INTO the image
+COPY ../../app/ /var/www/html/
 
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
+# Expose PHP-FPM port
 EXPOSE 9000
 
 CMD ["php-fpm"]
