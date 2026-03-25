@@ -1,0 +1,17 @@
+# Keine PHP-Ausführung in Upload-Verzeichnis
+<FilesMatch "\.(php|php3|php4|php5|php7|php8|phtml|pl|py|jsp|asp|sh|cgi|shtml)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Nur Bilder erlauben
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Kein Directory Listing
+Options -Indexes
+
+# Keine Script-Ausführung
+php_flag engine off

@@ -1,0 +1,25 @@
+# Environment
+.env
+
+# Data (persistent volumes)
+data/
+
+# App config mit Credentials
+app/includes/config.php
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backups
+*.sql.backup
+*.bak

@@ -1,0 +1,90 @@
+/**
+ * Dark Mode Styles
+ * DRK Stadtverband Haltern am See e.V.
+ */
+
+body.dark-mode {
+    --primary-white: #1a1a1a;
+    --light-gray: #2d2d2d;
+    --primary-black: #ffffff;
+    --dark-gray: #b0b0b0;
+    --border-color: #404040;
+    
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+body.dark-mode .sidebar {
+    background: #2d2d2d;
+    border-right: 1px solid #404040;
+}
+
+body.dark-mode .card {
+    background: #2d2d2d;
+    border: 1px solid #404040;
+}
+
+body.dark-mode .form-input,
+body.dark-mode .form-select,
+body.dark-mode .form-textarea {
+    background: #404040;
+    border-color: #606060;
+    color: #ffffff;
+}
+
+body.dark-mode .form-input:focus,
+body.dark-mode .form-select:focus,
+body.dark-mode .form-textarea:focus {
+    border-color: var(--primary-red);
+    background: #4a4a4a;
+}
+
+body.dark-mode .touch-item:hover,
+body.dark-mode .touch-item:active {
+    background: rgba(220, 20, 60, 0.15);
+}
+
+body.dark-mode .vehicle-card {
+    background: #2d2d2d;
+    border: 1px solid #404040;
+}
+
+body.dark-mode .compartment-header {
+    background: #404040;
+}
+
+body.dark-mode .product-item.checking {
+    background: rgba(220, 20, 60, 0.15);
+}
+
+body.dark-mode .status-btn {
+    background: #404040;
+    border-color: #606060;
+    color: #ffffff;
+}
+
+body.dark-mode .date-input {
+    background: #404040;
+    border-color: #606060;
+    color: #ffffff;
+}
+
+body.dark-mode .modal-content {
+    background: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .loading-indicator {
+    background: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .toast {
+    background: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .photo-placeholder {
+    background: #404040;
+    border-color: #606060;
+}

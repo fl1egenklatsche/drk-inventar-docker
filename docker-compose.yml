@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # MariaDB Datenbank
+  db:
+    image: mariadb:11
+    container_name: drk-inventar-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-drk_root_password}
+      MYSQL_DATABASE: ${DB_NAME:-drk_inventar}
+      MYSQL_USER: ${DB_USER:-drk_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-drk_password}
+      TZ: ${TZ:-Europe/Berlin}
+    volumes:
+      - ./data/db:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    networks:
+      - drk-network
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-drk_root_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PHP-FPM Application
+  app:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: drk-inventar-app
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Europe/Berlin}
+    volumes:
+      - ./app:/var/www/html
+      - ./data/uploads:/var/www/html/uploads
+    networks:
+      - drk-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Caddy Webserver (mit Let's Encrypt)
+  caddy:
+    image: caddy:2
+    container_name: drk-inventar-caddy
+    restart: unless-stopped
+    environment:
+      HOSTNAME: ${HOSTNAME:?HOSTNAME muss in .env gesetzt werden!}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./app:/var/www/html:ro
+      - ./data/caddy/data:/data
+      - ./data/caddy/config:/config
+    networks:
+      - drk-network
+    depends_on:
+      - app
+
+  # phpMyAdmin (optional)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: drk-inventar-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${DB_USER:-drk_user}
+      PMA_PASSWORD: ${DB_PASSWORD:-drk_password}
+      UPLOAD_LIMIT: 50M
+    ports:
+      - "8080:80"
+    networks:
+      - drk-network
+    depends_on:
+      - db
+
+networks:
+  drk-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:

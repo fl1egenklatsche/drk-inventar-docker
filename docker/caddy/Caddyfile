@@ -1,0 +1,28 @@
+{$HOSTNAME} {
+    # Let's Encrypt automatisch via ACME
+    # Zertifikate werden in /data/caddy gespeichert
+    
+    # PHP-FPM Backend
+    root * /var/www/html
+    php_fastcgi app:9000
+    file_server
+    
+    # Security Headers
+    header {
+        X-Frame-Options "SAMEORIGIN"
+        X-Content-Type-Options "nosniff"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+    
+    # Logging
+    log {
+        output stdout
+        format console
+    }
+    
+    # Error Pages
+    handle_errors {
+        respond "{http.error.status_code} {http.error.status_text}"
+    }
+}
